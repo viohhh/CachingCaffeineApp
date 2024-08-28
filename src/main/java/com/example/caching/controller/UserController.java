@@ -1,5 +1,6 @@
 package com.example.caching.controller;
 
+import com.example.caching.model.AppUser;
 import com.example.caching.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,16 @@ public class UserController {
         } else {
             return new ResponseEntity(userService.updateUserStatus(username, status), HttpStatus.OK);
         }
+    }
+
+    @GetMapping(path = "/cached/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getUserByUsernameCached(@PathVariable String username) {
+        return new ResponseEntity(userService.getUserByUsernameCached(username), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/adduser", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity saveNewUser(@RequestBody AppUser user) {
+        return new ResponseEntity(userService.saveNewUser(user), HttpStatus.OK);
     }
 
     // "cached/{username}"
